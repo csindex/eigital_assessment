@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/common/login_type.dart';
+import '../../core/services/firebase_service.dart';
 
 class SignInButton extends StatelessWidget {
   final FaIcon faIcon;
@@ -17,8 +18,13 @@ class SignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final firebaseService = FirebaseService();
     return Container(
-      color: Colors.amber,
+      width: 256.0,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.black),
+      ),
       padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
       child: TextButton.icon(
         icon: faIcon,
@@ -29,7 +35,9 @@ class SignInButton extends StatelessWidget {
             fontSize: 16.0,
           ),
         ),
-        onPressed: null,
+        onPressed: type == LoginType.typeGoogle
+            ? firebaseService.signInwithGoogle
+            : firebaseService.signInWithFacebook,
       ),
     );
   }
